@@ -1,27 +1,32 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function LoadCoursePage() {
-  const [username, setUsername] = useState('');
-  const [repoName, setRepoName] = useState('');
+  const [repoPath, setRepoPath] = useState('');
   const [readmeContent, setReadmeContent] = useState('');
   const [error, setError] = useState('');
 
-  const fetchReadme = async () => {
-    const url = `https://raw.githubusercontent.com/${username}/${repoName}/main/README.md`;
-    try {
-      const response = await fetch(url);
-      if (!response.ok) {
-        throw new Error('Failed to fetch README.md');
+  useEffect(() => {
+    const fetchReadme = async () => {
+      if (!repoPath) return;
+      const [username, repoName] = repoPath.split('/');
+      if (!username || !repoName) return;
+      const url = `https://raw.githubusercontent.com/${username}/${repoName}/main/README.md`;
+      try {
+        const response = await fetch(url);
+        if (!response.ok) {
+          throw new Error('Failed to fetch README.md');
+        }
+        const content = await response.text();
+        setReadmeContent(content);
+        setError('');
+      } catch (error) {
+        setError(error.message);
+        setReadmeContent('');
       }
-      const content = await response.text();
-      setReadmeContent(content);
-      setError('');
-    } catch (error) {
-      setError(error.message);
-      setReadmeContent('');
-    }
-  };
+    };
+    fetchReadme();
+  }, [repoPath]);
 
   return (
     <div className="container text-center">
@@ -30,23 +35,11 @@ export default function LoadCoursePage() {
         <input
           type="text"
           className="form-control"
-          placeholder="GitHub Username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="username/repo"
+          value={repoPath}
+          onChange={(e) => setRepoPath(e.target.value)}
         />
       </div>
-      <div className="mb-3">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Repository Name"
-          value={repoName}
-          onChange={(e) => setRepoName(e.target.value)}
-        />
-      </div>
-      <button className="btn btn-primary" onClick={fetchReadme}>
-        Load README
-      </button>
 
       {error && <div className="alert alert-danger mt-3">{error}</div>}
 
