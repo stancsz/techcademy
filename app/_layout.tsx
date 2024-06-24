@@ -31,7 +31,7 @@ export default function Layout({ children }) {
           </div>
         </div>
       </nav>
-      <main className="flex-grow-1 d-flex justify-content-center align-items-center py-3">
+      <main className="flex-grow-1 d-flex justify-content-center align-items-center py-3" style={{ overflowY: 'auto' }}>
         <div className="container bg-light p-4 rounded shadow">
           <Slot />
           {children}
