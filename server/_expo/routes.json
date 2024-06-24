@@ -1,0 +1,60 @@
+{
+  "apiRoutes": [
+    {
+      "file": "_expo/functions/api/generate+api.js",
+      "page": "/api/generate",
+      "namedRegex": "^/api/generate(?:/)?$",
+      "routeKeys": {}
+    }
+  ],
+  "htmlRoutes": [
+    {
+      "file": "./index.tsx",
+      "page": "/index",
+      "namedRegex": "^/(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./login.tsx",
+      "page": "/login",
+      "namedRegex": "^/login(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./signup.tsx",
+      "page": "/signup",
+      "namedRegex": "^/signup(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "./openai.tsx",
+      "page": "/openai",
+      "namedRegex": "^/openai(?:/)?$",
+      "routeKeys": {}
+    },
+    {
+      "file": "expo-router/build/views/Sitemap.js",
+      "page": "/_sitemap",
+      "namedRegex": "^/_sitemap(?:/)?$",
+      "routeKeys": {},
+      "generated": true
+    },
+    {
+      "file": "./resetPassword.tsx",
+      "page": "/resetPassword",
+      "namedRegex": "^/resetPassword(?:/)?$",
+      "routeKeys": {}
+    }
+  ],
+  "notFoundRoutes": [
+    {
+      "file": "expo-router/build/views/Unmatched.js",
+      "page": "/+not-found",
+      "namedRegex": "^(?:/(?<notfound>.+?))?(?:/)?$",
+      "routeKeys": {
+        "notfound": "not-found"
+      },
+      "generated": true
+    }
+  ]
+}
