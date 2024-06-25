@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { marked } from 'marked';
+import DOMPurify from 'dompurify';
+
+// Configure marked to use GitHub style
+marked.setOptions({
+  gfm: true,
+  breaks: true,
+  headerIds: true,
+  xhtml: true,
+});
 
 export default function LoadCoursePage() {
   const [repoPath, setRepoPath] = useState('');
@@ -7,7 +17,7 @@ export default function LoadCoursePage() {
   const [error, setError] = useState('');
 
   useEffect(() => {
-    const fetchReadme = async () => {
+    const fetchAndRenderReadme = async () => {
       if (!repoPath) return;
       const [username, repoName] = repoPath.split('/');
       if (!username || !repoName) return;
@@ -18,14 +28,15 @@ export default function LoadCoursePage() {
           throw new Error('Failed to fetch README.md');
         }
         const content = await response.text();
-        setReadmeContent(content);
+        const html = marked(content);
+        setReadmeContent(DOMPurify.sanitize(html));
         setError('');
       } catch (error) {
         setError(error.message);
         setReadmeContent('');
       }
     };
-    fetchReadme();
+    fetchAndRenderReadme();
   }, [repoPath]);
 
   return (
@@ -46,7 +57,7 @@ export default function LoadCoursePage() {
       {readmeContent && (
         <div className="mt-3 text-left">
           <h2>README.md:</h2>
-          <pre>{readmeContent}</pre>
+          <div dangerouslySetInnerHTML={{ __html: readmeContent }} />
         </div>
       )}
     </div>
