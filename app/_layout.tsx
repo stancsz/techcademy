@@ -26,7 +26,7 @@ export default function Layout({ children }) {
             <ul className="dropdown-menu" aria-labelledby="userDropdown">
               <li><a className="dropdown-item" href="#" onClick={() => router.push('/login')}>Login</a></li>
               <li><a className="dropdown-item" href="#" onClick={() => router.push('/signup')}>Sign Up</a></li>
-              <li><a className="dropdown-item" href="#" onClick={() => router.push('/openai')}>OpenAI</a></li>
+              <li><a className="dropdown-item" href="#" onClick={() => router.push('/render')}>Render</a></li>
             </ul>
           </div>
         </div>
